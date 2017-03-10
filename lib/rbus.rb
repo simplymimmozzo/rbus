@@ -22,5 +22,15 @@ module Rbus
         handler.handle message
       end
     end
+
+    def send(message)
+      raise BusConfigurationError, "No handler configured for command #{message.class.name}" if !@handlers[message.class.name]
+      raise BusConfigurationError, "Too many handlers configured for #{message.class.name}, only 1 is allowed" if @handlers[message.class.name].count != 1
+      handler = @handlers[message.class.name][0]
+      handler.handle message
+    end
+  end
+
+  class BusConfigurationError < StandardError
   end
 end

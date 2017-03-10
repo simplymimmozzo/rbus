@@ -52,6 +52,47 @@ context "when an event is published and there is no handler configured for it" d
   end
 end
 
+context "when a command is sent and there is an handler configured for it" do
+
+  before do
+    bus = Rbus::Bus.new
+    @test_command_handler = TestEventHandler.new
+    bus.add_handler(TestEvent, @test_command_handler)
+    bus.send TestEvent.new
+  end
+
+  it "should dispatch the message to the configured handler" do
+    expect(@test_command_handler.received_message).to be true
+  end
+
+end
+
+
+context "when a command is sent and there is no handler configured for it" do
+  before do
+    @bus = Rbus::Bus.new
+  end
+
+  it "should raise a BusConfiguration error" do
+    expect {@bus.send TestEvent.new}.to raise_error(Rbus::BusConfigurationError)
+  end
+
+end
+
+context "when a command is sent and there more than one handler configured for it" do
+  before do
+    @bus = Rbus::Bus.new
+    @test_event_handler = TestEventHandler.new
+    @another_test_event_handler = AnotherTestEventHandler.new
+    @bus.add_handler(TestEvent, @test_event_handler)
+    @bus.add_handler(TestEvent, @another_test_event_handler)
+  end
+
+  it "should raise a BusConfiguration error" do
+    expect {@bus.send TestEvent.new}.to raise_error(Rbus::BusConfigurationError)
+  end
+
+end
 
 class TestEvent
 
