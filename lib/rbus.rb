@@ -10,6 +10,7 @@ module Rbus
     end
 
     def add_handler(message_type, handler)
+      raise BusConfigurationError, "Invalid nil handler instance" if handler == nil
       @handlers[message_type.name] = [] unless @handlers[message_type.name]
       @handlers[message_type.name] << handler
     end

@@ -94,6 +94,18 @@ context "when a command is sent and there more than one handler configured for i
 
 end
 
+context "when a nil handler is added" do
+  before do
+    @bus = Rbus::Bus.new
+  end
+
+  it "should raise a BusConfiguration error" do
+    expect {@bus.add_handler(TestEvent, nil)}.to raise_error(Rbus::BusConfigurationError)
+  end
+
+end
+
+
 class TestEvent
 
 end
