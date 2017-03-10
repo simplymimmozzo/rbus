@@ -17,9 +17,7 @@ module Rbus
 
     def publish(message)
       return if !@handlers[message.class.name]
-      handlers = @handlers[message.class.name]
-      return if handlers.count == 0
-      handlers.each do |handler|
+      @handlers[message.class.name].each do |handler|
         handler.handle message
       end
     end
