@@ -1,40 +1,5 @@
 require "spec_helper"
 
-class TestEvent
-
-end
-
-
-class AnotherTestEvent
-
-end
-
-class TestEventHandler
-
-  attr_reader :received_message
-
-  def initialize
-    @received_message = false
-  end
-
-  def handle(message)
-    @received_message = true
-  end
-end
-
-class AnotherTestEventHandler
-
-  attr_reader :received_message
-
-  def initialize
-    @received_message = false
-  end
-
-  def handle(message)
-    @received_message = true
-  end
-end
-
 context "when an event is published and there is an handler configured for it" do
 
   before do
@@ -84,5 +49,41 @@ context "when an event is published and there is no handler configured for it" d
 
   it "should not complain about it" do
     expect{@bus.publish TestEvent.new}.to_not raise_error
+  end
+end
+
+
+class TestEvent
+
+end
+
+
+class AnotherTestEvent
+
+end
+
+class TestEventHandler
+
+  attr_reader :received_message
+
+  def initialize
+    @received_message = false
+  end
+
+  def handle(message)
+    @received_message = true
+  end
+end
+
+class AnotherTestEventHandler
+
+  attr_reader :received_message
+
+  def initialize
+    @received_message = false
+  end
+
+  def handle(message)
+    @received_message = true
   end
 end

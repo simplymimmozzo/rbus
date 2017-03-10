@@ -23,5 +23,4 @@ module Rbus
       end
     end
   end
-
 end
