@@ -5,13 +5,13 @@ context "when handling a request quotes command" do
   before do
     @bus = instance_double("Rbus::Bus")
     allow(@bus).to receive(:publish)
-    @command = {:policyId => 1}
+    @command = RequestQuotesCommand.new
     @handler = Handlers::RequestQuotesCommandHandler.new(@bus)
     @handler.handle(@command)
   end
 
   it 'should generate the quotes' do
-
+    #some checks for quotes
   end
 
   it "should publish a quotes generated event" do
